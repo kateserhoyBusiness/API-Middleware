@@ -1,0 +1,37 @@
+{
+  "name": "catalogo-produtos-api",
+  "version": "1.0.0",
+  "description": "Um trabalho sobre API, com um pouco de middleware.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node swagger-autogen.js",
+    "dev": "nodemon swagger-autogen.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MuriloDamaceno/catalogo-produtos-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MuriloDamaceno/catalogo-produtos-api/issues"
+  },
+  "homepage": "https://github.com/MuriloDamaceno/catalogo-produtos-api#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.6.2",
+    "swagger-autogen": "^2.23.7",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  }
+  ,
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
