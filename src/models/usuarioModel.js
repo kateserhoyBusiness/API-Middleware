@@ -1,28 +1,52 @@
-const mongoose = require('mongoose');
+const { getPool } = require('../config/db');
 const bcrypt = require('bcryptjs');
 
-/**
- * Esquema do modelo de Usuário com validações obrigatórias e hash automático de senha.
- * @type {import('mongoose').Schema}
- * @param {string} nome - Nome completo do usuário (obrigatório).
- * @param {string} email - Email único do usuário no sistema (obrigatório).
- * @param {string} senha - Senha em texto plano que será criptografada com bcrypt (obrigatória).
- * @returns {import('mongoose').Document} Documento de usuário com senha automaticamente hashada.
- * @throws {Error} Lança erro se campos obrigatórios não forem fornecidos ou email já existe.
- */
-const usuarioSchema = new mongoose.Schema({
-    nome: { type: String, required: [true, 'Nome é obrigatório'] },
-    email: { type: String, required: [true, 'Email é obrigatório'], unique: true },
-    senha: { type: String, required: [true, 'Senha é obrigatória'] }
-});
+const findByEmail = async (email) => {
+    const pool = getPool();
+    const [rows] = await pool.execute('SELECT * FROM usuarios WHERE email = ?', [email]);
+    return rows.length > 0 ? rows[0] : null;
+};
 
-usuarioSchema.pre('save', async function () {
-    if (!this.isModified('senha')) return;
-    this.senha = await bcrypt.hash(this.senha, 10);
-});
+const findById = async (id) => {
+    const pool = getPool();
+    const [rows] = await pool.execute(
+        'SELECT id_usuario, nome, email, criado_em FROM usuarios WHERE id_usuario = ?',
+        [id]
+    );
+    return rows.length > 0 ? rows[0] : null;
+};
 
-/**
- * Modelo de usuário Mongoose.
- * @type {import('mongoose').Model<import('mongoose').Document>}
- */
-module.exports = mongoose.model('Usuario', usuarioSchema);
+const create = async (data) => {
+    const pool = getPool();
+    const { nome, email, senha } = data;
+
+    if (!nome || !email || !senha) {
+        throw new Error('Nome, email e senha sao obrigatorios');
+    }
+
+    const usuarioExistente = await findByEmail(email);
+
+    if (usuarioExistente) {
+        throw new Error('Email ja cadastrado');
+    }
+
+    const senhaHash = await bcrypt.hash(senha, 10);
+
+    const [result] = await pool.execute(
+        'INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)',
+        [nome, email, senhaHash]
+    );
+
+    return { id_usuario: result.insertId, nome, email };
+};
+
+const verificarSenha = async (senhaFornecida, senhaHash) => {
+    return bcrypt.compare(senhaFornecida, senhaHash);
+};
+
+module.exports = {
+    findByEmail,
+    findById,
+    create,
+    verificarSenha
+};

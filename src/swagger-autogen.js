@@ -1,5 +1,6 @@
 const swaggerAutogen = require('swagger-autogen')();
 const path = require('path');
+const fs = require('fs');
 
 const doc = {
   info: {
@@ -19,5 +20,10 @@ const endpointsFiles = [
 ];
 
 swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
-  require('./app.js');
+  const swagger = JSON.parse(fs.readFileSync(outputFile, 'utf8'));
+  ['/registrar', '/login', '/', '/{id}', '/{produtoId}/{pedidoId}'].forEach((pathName) => {
+    delete swagger.paths[pathName];
+  });
+  fs.writeFileSync(outputFile, `${JSON.stringify(swagger, null, 2)}\n`);
+  console.log('Swagger gerado em swagger_output.json');
 });

@@ -4,8 +4,9 @@
   "description": "Um trabalho sobre API, com um pouco de middleware.",
   "main": "app.js",
   "scripts": {
-    "start": "node swagger-autogen.js",
-    "dev": "nodemon swagger-autogen.js",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "swagger": "node swagger-autogen.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,7 +26,7 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.6.2",
+    "mysql2": "^3.6.5",
     "swagger-autogen": "^2.23.7",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
