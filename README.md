@@ -28,10 +28,17 @@ JWT_SECRET=sua_chave_secreta_aqui
 
 ## Instalacao e execucao
 
+A partir da raiz do projeto, rode:
+
 ```bash
-cd src
 npm install
 npm start
+```
+
+Se quiser desenvolvimento com reinicializacao automatica:
+
+```bash
+npm run dev
 ```
 
 Documentacao Swagger:

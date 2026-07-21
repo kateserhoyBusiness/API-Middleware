@@ -1,0 +1,36 @@
+{
+  "name": "api-middleware",
+  "version": "1.0.0",
+  "description": "API REST em Node.js/Express usando MySQL para o banco `loja`.",
+  "homepage": "https://github.com/kateserhoyBusiness/API-Middleware#readme",
+  "bugs": {
+    "url": "https://github.com/kateserhoyBusiness/API-Middleware/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kateserhoyBusiness/API-Middleware.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "swagger": "node src/swagger-autogen.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.6.5",
+    "swagger-autogen": "^2.23.7",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
